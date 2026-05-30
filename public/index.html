@@ -29,9 +29,20 @@
     </div>
     <button id="compare" type="button" class="btn">Compare</button>
     <p id="result" class="result" aria-live="polite"></p>
+
+    <section id="diff-section" class="diff-section hidden" aria-label="Diff viewer">
+      <div class="diff-toolbar">
+        <p id="diff-summary" class="diff-summary"></p>
+        <div class="diff-view-toggle" role="group" aria-label="Diff view mode">
+          <button type="button" id="view-split" class="btn btn--ghost btn--toggle is-active">Split</button>
+          <button type="button" id="view-unified" class="btn btn--ghost btn--toggle">Unified</button>
+        </div>
+      </div>
+      <div id="diff-viewer" class="diff-viewer"></div>
+    </section>
   </main>
   <footer class="footer">
-    <p>MIT © 2026 · <a href="mailto:piyush_mishra31@outlook.com">piyush_mishra31@outlook.com</a></p>
+    <p>MIT © 2026 · <a href="https://piyushm.dev">piyushm.dev</a></p>
   </footer>
   <script src="/app.js"></script>
 </body>
