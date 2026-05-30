@@ -3,15 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Compare two code snippets line-by-line via the CodeDiff API." />
   <title>CodeDiff</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <header>
+  <header class="header">
     <h1>CodeDiff</h1>
-    <p>Compare two code snippets line-by-line (same logic as the C++ CLI, via API).</p>
+    <p>Compare two snippets line-by-line — same logic as the C++ CLI, exposed over HTTP.</p>
   </header>
-  <main>
+  <main class="main">
+    <div class="toolbar">
+      <button type="button" id="load-equal" class="btn btn--ghost">Load equal example</button>
+      <button type="button" id="load-diff" class="btn btn--ghost">Load diff example</button>
+    </div>
     <div class="panes">
       <div>
         <label for="left">Snippet A</label>
@@ -22,9 +27,12 @@
         <textarea id="right" rows="16" placeholder="Second file contents…"></textarea>
       </div>
     </div>
-    <button id="compare" type="button">Compare</button>
-    <p id="result" aria-live="polite"></p>
+    <button id="compare" type="button" class="btn">Compare</button>
+    <p id="result" class="result" aria-live="polite"></p>
   </main>
+  <footer class="footer">
+    <p>MIT © 2026 · <a href="mailto:piyush_mishra31@outlook.com">piyush_mishra31@outlook.com</a></p>
+  </footer>
   <script src="/app.js"></script>
 </body>
 </html>
