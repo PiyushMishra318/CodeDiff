@@ -1,0 +1,11 @@
+body { font-family: system-ui, sans-serif; margin: 0; background: #fafafa; }
+header { background: #222; color: #fff; padding: 1.25rem 2rem; }
+header h1 { margin: 0; }
+main { max-width: 1100px; margin: 1.5rem auto; padding: 0 1rem; }
+.panes { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 700px) { .panes { grid-template-columns: 1fr; } }
+textarea { width: 100%; font-family: ui-monospace, monospace; font-size: 0.85rem; padding: 0.5rem; }
+button { margin-top: 1rem; padding: 0.6rem 1.2rem; background: #0d9488; color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+#result { font-size: 1.1rem; font-weight: 600; margin-top: 1rem; }
+#result.equal { color: #059669; }
+#result.diff { color: #dc2626; }

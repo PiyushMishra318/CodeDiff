@@ -7,16 +7,21 @@ on:
     branches: [master, main]
 
 jobs:
-  test:
+  cpp:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Configure
-        run: cmake -B build -S .
-
-      - name: Build
-        run: cmake --build build
-
-      - name: Test
-        run: ctest --test-dir build --output-on-failure
+      - name: Build and test C++
+        run: |
+          cmake -S . -B build
+          cmake --build build
+          cd build && ctest --output-on-failure
+  node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci || npm install
+      - run: npm test

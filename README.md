@@ -28,7 +28,17 @@ cmake -B build -S . -G "Visual Studio 17 2022"
 cmake --build build --config Release
 ```
 
-## Usage
+## Web demo (Vercel)
+
+Paste two code snippets at `/` to compare them line-by-line (same semantics as the C++ CLI). Deploy:
+
+```bash
+npx vercel --prod
+```
+
+API: `POST /api/compare` with JSON `{ "left": "...", "right": "..." }`.
+
+## CLI usage
 
 ```bash
 ./build/CodeDiff file1.txt file2.txt

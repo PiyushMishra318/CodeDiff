@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CodeDiff</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>CodeDiff</h1>
+    <p>Compare two code snippets line-by-line (same logic as the C++ CLI, via API).</p>
+  </header>
+  <main>
+    <div class="panes">
+      <div>
+        <label for="left">Snippet A</label>
+        <textarea id="left" rows="16" placeholder="First file contents…"></textarea>
+      </div>
+      <div>
+        <label for="right">Snippet B</label>
+        <textarea id="right" rows="16" placeholder="Second file contents…"></textarea>
+      </div>
+    </div>
+    <button id="compare" type="button">Compare</button>
+    <p id="result" aria-live="polite"></p>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
