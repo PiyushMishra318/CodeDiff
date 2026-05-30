@@ -7,8 +7,10 @@
   <title>CodeDiff</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
-<body>
+<body class="theme-diff">
+  <div class="bg-animation" aria-hidden="true"></div>
   <header class="header">
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme"><span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">&#9728;</span><span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">&#9789;</span></button>
     <h1>CodeDiff</h1>
     <p>Compare two snippets line-by-line — same logic as the C++ CLI, exposed over HTTP.</p>
   
@@ -47,5 +49,6 @@
     <p>MIT © 2026 · <a href="https://piyushm.dev">piyushm.dev</a> · <a href="https://github.com/PiyushMishra318/CodeDiff" target="_blank" rel="noopener noreferrer">View on GitHub</a></p>
   </footer>
   <script src="/app.js"></script>
+  <script src="/theme.js"></script>
 </body>
 </html>
