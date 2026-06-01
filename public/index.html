@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700&family=IBM+Plex+Mono:wght@400&display=swap" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Compare two code snippets line-by-line via the CodeDiff API." />
   <title>CodeDiff</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
-<body class="theme-diff">
+<body class="theme-diff portfolio-designed">
   <div class="bg-animation" aria-hidden="true"></div>
   <header class="header">
-    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme"><span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">&#9728;</span><span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">&#9789;</span></button>
-    <h1>CodeDiff</h1>
+        <div class="header__top">
+      <a class="header__brand" href="https://piyushm.dev">piyushm.dev</a>
+      <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme"><span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">&#9728;</span><span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">&#9789;</span></button>
+    </div>
+
+    <p class="eyebrow">C++ diff engine</p>
+      <h1>CodeDiff</h1>
     <p>Compare two snippets line-by-line — same logic as the C++ CLI, exposed over HTTP.</p>
   
     <a class="header__github" href="https://github.com/PiyushMishra318/CodeDiff" target="_blank" rel="noopener noreferrer">View on GitHub</a>
