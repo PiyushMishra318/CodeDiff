@@ -41,25 +41,26 @@ header,
 }
 
 .header {
-  background: #0f172a;
-  color: #fff;
   padding: 1.75rem 1.5rem;
+  border-bottom: 1px solid var(--border);
 }
 
 .header h1 {
   margin: 0 0 0.35rem;
+  color: var(--text);
 }
 
 .header p {
   margin: 0;
-  color: #cbd5e1;
+  color: var(--muted);
 }
 
 .page-main,
 .main,
 main {
   flex: 1 0 auto;
-  max-width: 1100px;
+  max-width: min(1200px, 95vw);
+  width: 100%;
   margin: 0 auto;
   padding: 1.5rem;
 }
@@ -122,9 +123,9 @@ textarea {
 }
 
 .btn--toggle.is-active {
-  background: #0f172a;
+  background: var(--accent);
   color: #fff;
-  border-color: #0f172a;
+  border-color: var(--accent);
 }
 
 .result {
@@ -203,10 +204,11 @@ footer {
 }
 
 .diff-viewer {
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--border);
   border-radius: 8px;
   overflow: auto;
-  background: #fff;
+  background: var(--card);
+  color: var(--text);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.8125rem;
   line-height: 1.45;
@@ -228,7 +230,7 @@ footer {
 }
 
 .diff-pane--old {
-  border-right: 1px solid #d0d7de;
+  border-right: 1px solid var(--border);
 }
 
 .diff-row {
@@ -246,9 +248,9 @@ footer {
   min-width: 2.5rem;
   padding: 0 0.5rem;
   text-align: right;
-  color: #656d76;
-  background: #f6f8fa;
-  border-right: 1px solid #d0d7de;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--card) 92%, var(--bg));
+  border-right: 1px solid var(--border);
   user-select: none;
 }
 
@@ -260,7 +262,7 @@ footer {
 .diff-sign {
   width: 1.25rem;
   text-align: center;
-  color: #656d76;
+  color: var(--muted);
   user-select: none;
 }
 
@@ -270,11 +272,12 @@ footer {
 }
 
 .diff-row--equal .diff-code {
-  background: #fff;
+  background: var(--card);
+  color: var(--text);
 }
 
 .diff-row--delete {
-  background: #ffebe9;
+  background: color-mix(in srgb, #cf222e 18%, var(--card));
 }
 
 .diff-row--delete .diff-code {
@@ -282,7 +285,7 @@ footer {
 }
 
 .diff-row--insert {
-  background: #dafbe1;
+  background: color-mix(in srgb, #1a7f37 18%, var(--card));
 }
 
 .diff-row--insert .diff-code {
@@ -290,7 +293,28 @@ footer {
 }
 
 .diff-row--empty {
-  background: #f6f8fa;
+  background: color-mix(in srgb, var(--card) 92%, var(--bg));
+}
+
+[data-theme='dark'] .diff-row--delete {
+  background: color-mix(in srgb, #f85149 22%, var(--card));
+}
+
+[data-theme='dark'] .diff-row--delete .diff-code {
+  color: #ffa198;
+}
+
+[data-theme='dark'] .diff-row--insert {
+  background: color-mix(in srgb, #3fb950 22%, var(--card));
+}
+
+[data-theme='dark'] .diff-row--insert .diff-code {
+  color: #7ee787;
+}
+
+[data-theme='dark'] .diff-row--equal .diff-code {
+  background: var(--card);
+  color: var(--text);
 }
 
 /* --- portfolio theme: dark mode + animated bg --- */
