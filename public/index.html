@@ -22,7 +22,7 @@
         <a class="nav__link" href="#features">Features</a>
         <a class="nav__link" href="#how-it-works">How It Works</a>
         <a class="nav__link" href="#api">API</a>
-        <a class="nav__cta" href="/products/codediff/">
+        <a class="nav__cta" href="#demo">
           Try Live Demo
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
@@ -175,6 +175,99 @@
           <span class="diff-preview__timing">Time: 0.42ms · Files differ: 1</span>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE DEMO -->
+  <section id="demo" class="section demo-section" aria-labelledby="demo-title">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Live Demo</span>
+        <h2 class="section-title" id="demo-title">Try it yourself</h2>
+        <p class="section-desc">Paste two code snippets and hit Compare to see the diff rendered live.</p>
+      </div>
+
+      <div class="demo-inputs">
+        <div class="demo-pane">
+          <div class="demo-pane__header">
+            <span class="demo-pane__label demo-pane__label--left">— left (original)</span>
+          </div>
+          <textarea id="demo-left" class="demo-textarea" spellcheck="false" aria-label="Left code input">int add(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    int x = add(1, 2);
+    return 0;
+}</textarea>
+        </div>
+        <div class="demo-pane">
+          <div class="demo-pane__header">
+            <span class="demo-pane__label demo-pane__label--right">+ right (modified)</span>
+          </div>
+          <textarea id="demo-right" class="demo-textarea" spellcheck="false" aria-label="Right code input">int add(int a, int b) {
+    return a + b;
+}
+
+int multiply(int a, int b) {
+    return a * b;
+}
+
+int main() {
+    int x = add(1, 2);
+    int y = multiply(3, 4);
+    return 0;
+}</textarea>
+        </div>
+      </div>
+
+      <div class="demo-actions">
+        <button id="demo-compare-btn" class="btn-primary demo-btn" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+          Compare →
+        </button>
+        <button id="demo-clear-btn" class="btn-secondary demo-btn" type="button">Clear</button>
+      </div>
+
+      <div id="demo-output" class="demo-output" hidden aria-live="polite">
+        <div class="demo-output__toolbar">
+          <div class="diff-preview__dots" aria-hidden="true">
+            <span class="diff-preview__dot diff-preview__dot--red"></span>
+            <span class="diff-preview__dot diff-preview__dot--yellow"></span>
+            <span class="diff-preview__dot diff-preview__dot--green"></span>
+          </div>
+          <span id="demo-output-title" class="diff-preview__title">diff result</span>
+          <span id="demo-output-badge" class="diff-preview__badge diff-preview__badge--changed"></span>
+        </div>
+
+        <div class="demo-output__body">
+          <div class="demo-output__panel">
+            <div class="demo-pane__header">
+              <span class="demo-pane__label demo-pane__label--left">— original</span>
+            </div>
+            <div id="demo-lines-left" class="diff-preview__lines"></div>
+          </div>
+          <div class="demo-output__panel">
+            <div class="demo-pane__header">
+              <span class="demo-pane__label demo-pane__label--right">+ modified</span>
+            </div>
+            <div id="demo-lines-right" class="diff-preview__lines"></div>
+          </div>
+        </div>
+
+        <div class="diff-preview__footer">
+          <div class="diff-preview__stat">
+            <span id="demo-stat-add" class="diff-preview__stat-add"></span>
+            <span id="demo-stat-sep">&nbsp;·&nbsp;</span>
+            <span id="demo-stat-del" class="diff-preview__stat-del"></span>
+          </div>
+          <span id="demo-timing" class="diff-preview__timing"></span>
+        </div>
+      </div>
+
+      <div id="demo-error" class="demo-error" hidden></div>
     </div>
   </section>
 
@@ -460,5 +553,106 @@
     </div>
   </footer>
 
+  <script>
+    (function () {
+      var btn     = document.getElementById('demo-compare-btn');
+      var clearBtn= document.getElementById('demo-clear-btn');
+      var output  = document.getElementById('demo-output');
+      var errBox  = document.getElementById('demo-error');
+      var lLines  = document.getElementById('demo-lines-left');
+      var rLines  = document.getElementById('demo-lines-right');
+      var timing  = document.getElementById('demo-timing');
+      var badge   = document.getElementById('demo-output-badge');
+      var statAdd = document.getElementById('demo-stat-add');
+      var statDel = document.getElementById('demo-stat-del');
+
+      function esc(s) {
+        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      }
+
+      function makeLine(num, sign, text, kind) {
+        var cls = kind === 'insert' ? 'diff-line--add'
+                : kind === 'delete' ? 'diff-line--del'
+                : 'diff-line--eq';
+        return '<div class="diff-line ' + cls + '">'
+          + '<span class="diff-line__num">' + (num !== null ? num : '') + '</span>'
+          + '<span class="diff-line__sign">' + esc(sign) + '</span>'
+          + '<span class="diff-line__code">' + esc(text) + '</span>'
+          + '</div>';
+      }
+
+      btn.addEventListener('click', function () {
+        var left  = document.getElementById('demo-left').value;
+        var right = document.getElementById('demo-right').value;
+        btn.disabled = true;
+        btn.textContent = 'Comparing…';
+        output.hidden = true;
+        errBox.hidden = true;
+
+        fetch('/products/codediff/api/compare', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ left: left, right: right })
+        })
+        .then(function (r) {
+          if (!r.ok) throw new Error('API error ' + r.status);
+          return r.json();
+        })
+        .then(function (data) {
+          var diff = data.diff || [];
+          var leftHtml = '', rightHtml = '';
+          var adds = 0, dels = 0;
+
+          diff.forEach(function (d) {
+            var kind = d.kind;
+            if (kind === 'equal') {
+              leftHtml  += makeLine(d.leftNum,  ' ', d.left  || d.content || '', 'equal');
+              rightHtml += makeLine(d.rightNum, ' ', d.right || d.content || '', 'equal');
+            } else if (kind === 'delete') {
+              leftHtml  += makeLine(d.leftNum,  '-', d.left  || d.content || '', 'delete');
+              rightHtml += makeLine(null,        ' ', '',                         'equal');
+              dels++;
+            } else if (kind === 'insert') {
+              leftHtml  += makeLine(null,        ' ', '',                         'equal');
+              rightHtml += makeLine(d.rightNum, '+', d.right || d.content || '', 'insert');
+              adds++;
+            } else if (kind === 'change') {
+              leftHtml  += makeLine(d.leftNum,  '-', d.left  || '', 'delete');
+              rightHtml += makeLine(d.rightNum, '+', d.right || '', 'insert');
+              dels++; adds++;
+            }
+          });
+
+          lLines.innerHTML = leftHtml  || '<div class="diff-line diff-line--eq"><span class="diff-line__code" style="padding:8px;color:var(--text-muted)">(empty)</span></div>';
+          rLines.innerHTML = rightHtml || '<div class="diff-line diff-line--eq"><span class="diff-line__code" style="padding:8px;color:var(--text-muted)">(empty)</span></div>';
+
+          statAdd.textContent = '+' + adds + ' addition' + (adds !== 1 ? 's' : '');
+          statDel.textContent = '-' + dels + ' deletion' + (dels !== 1 ? 's' : '');
+          timing.textContent  = 'Time: ' + (data.elapsedMs != null ? data.elapsedMs.toFixed(2) + 'ms' : '—') + ' · ' + (data.equal ? 'Files equal' : 'Files differ');
+
+          var changed = adds + dels;
+          badge.textContent = data.equal ? 'equal' : changed + ' changed';
+          badge.className   = 'diff-preview__badge ' + (data.equal ? 'diff-preview__badge--equal' : 'diff-preview__badge--changed');
+
+          output.hidden = false;
+        })
+        .catch(function (err) {
+          errBox.textContent = 'Error: ' + err.message;
+          errBox.hidden = false;
+        })
+        .finally(function () {
+          btn.disabled = false;
+          btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> Compare →';
+        });
+      });
+
+      clearBtn.addEventListener('click', function () {
+        document.getElementById('demo-left').value  = '';
+        document.getElementById('demo-right').value = '';
+        output.hidden  = true;
+        errBox.hidden  = true;
+      });
+    })();
+  </script>
 </body>
 </html>
